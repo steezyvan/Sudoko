@@ -1,6 +1,12 @@
 package sudoku.userInterface;
 
+import javafx.scene.Scene;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundPosition;
+import sudoku.problemdomain.SudokuGame;
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.beans.EventHandler;
 import java.security.Key;
@@ -75,17 +81,70 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View, EventHand
     }
 
     private void drawTextFields(Group root) {
+            final int xOrigin = 50;
+            final int yOrigin = 50;
 
+            final int xAndYDelta = 64;
 
+            //O(On^2) Runtime complexity
+            for (int xIndex =; xIndex < 9; xIndex++) {
+                for(int yIndex = 0; yIndex < 9; yIndex++) {
+                    int x = xOrigin + xIndex * xAndYDelta;
+                    int y = xOrigin + yIndex * xAndYDelta;
+
+                    SudokuTextField tile = new SudokuTextField(xIndex, yIndex);
+
+                    styleSudokuTile(tile, x, y);
+
+                    tile.setOnKeyPrese(this);
+
+                    textFieldCoordinates.put(new Coordinates(xIndex, yIndex), tile);
+
+                    root.getChildren().add(tile);
+                }
+        }
+}
+
+    private void styleSudokuTile(SudokuTextField tile, double x, double y) {
+            font numebrFont = new font(32);
+
+            tile.setFont(numberFont);
+            tile.setAlignment(BackgroundPosition.CENTER);
+
+            tile.setLayoutX(x);
+            tile.setLayoutY(y);
+            tile.setPrefHeight(64);
+            tile.setPrefWidth(64);
+
+            tile.setBackground(Background.EMPTY);
     }
 
     private void drawSudokuBoard(Group root) {
+            Rectangle boardBackground = new Rectangle();
+            boardBackground.setX(BOARD_PADDING);
+            boardBackground.setY(BOARD_PADDING);
+
+            boardBackground.setWidth(BOARD_X_AND_Y);
+            boardBackground.setHeight(BOARD_X_AND_Y);
+
+            boardBackground.setFill(BOARD_BACKROUND_COLOR);
+
+            root.getChildren().addAll(boardBackground);
+
     }
 
     private void drawTitle(Group root) {
+        Text title = new Text(235, 690, SUDOKU);
+        title.setFill(Color.WHITE);
+        Font titleFont = new Font(43);
+        title.setFont(titleFont);
+        root.getChildren().add(title);
     }
 
     private void drawBackground(Group root) {
+            Scene scene = new Scene(root, WINDOW_X, WINDOW_Y);
+            scene.setFill(WINDOW_BACKROUND_COLOR);
+            stage.setScene(scene);
     }
 
 
@@ -102,10 +161,40 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View, EventHand
 
         @Override
         public void updateSquare( int x, int y, int input){
+            SudokuTextField tile = textFieldCoordinates.get(new Coordinates(x, y));
+
+            String value = Integer.toString(input);
+            if(value.equals("0")) value = "";
+
+            tile .textProperty().setValue(value);
+
+        }
+
+        @Override
+        public void updateBoard(SudokuGame game){
+            for(int xIndex = 0; xIndex < 9; xIndex++) {
+                for(int yIndex = 0; yIndex < 9; yIndex++) {
+                    TextField tile = textFieldCoordinates.get(new Coordinates(xIndex, yIndex));
+
+                    String value = Integer.toString(game.getCopyOfGridState()[xIndex][yIndex]);
+
+                    if(value.equals("0")) value = "";
+
+                    tile.setText(value);
+
+                    if(game.getGameState() == GameState.NEW) {
+
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void showDialog(String Message){
 
         }
 
 }
 
 
-//28:28
+//40:13
