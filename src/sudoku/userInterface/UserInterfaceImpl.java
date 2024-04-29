@@ -207,22 +207,26 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View, EventHand
         @Override
         public void handle(KeyEvent event) {
             if(event.getEventType() == KeyEvent.KEY_PRESSED) {
-                if(event.getText().matches("[0-9]")) {
+                if(
+                        event.getText().matches("[0-9]") {
                     int value = Integer.parstInt(event.getText());
                     handleInput(value, event.getSource());
 
-                    //else if(event.getCode == KeyCode.BACK_SPACE)  {
+                    } else if(event.getCode == KeyCode.BACK_SPACE)  {
                         handleInput(0, event.getSource());
                     } else {
                         ((TextField) event.getSource()).setText("");
                     }
-                        event.consume();
-                    }
+            }
+            event.consume();
+        }
+
 
             private void handleInput(int value, Object source)  {
-                     listener.onSudokuInput(((SudokuTextField) source).getX()), ((SudokuTextField) source).getY(), value);
-                }
+                     listener.onSudokuInput(
+                             ((SudokuTextField) source).getX(),
+                             ((SudokuTextField) source).getY(),
+                             value
+                );
                 }
             }
-
-//40:13

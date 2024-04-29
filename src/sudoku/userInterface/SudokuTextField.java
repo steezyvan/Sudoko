@@ -17,7 +17,7 @@ public class SudokuTextField extends TextField {
         return x;
     }
 
-    public int gety() {
+    public int getY() {
         return y;
     }
 
