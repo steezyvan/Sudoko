@@ -3,6 +3,7 @@ package sudoku.computationlogic;
 import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
 import org.w3c.dom.ls.LSOutput;
 import sudoku.problemdomain.Coordinates;
+import sudoku.problemdomain.SudokuGame;
 
 import javax.crypto.spec.PSource;
 import java.sql.SQLOutput;
@@ -16,11 +17,31 @@ public class GameGenerator {
         Random random = new Random(System.currentTimeMillis());
 
         boolean solvable = false;
-        int solveableArray = new int[GRID_BOUNDARY][GRID_BOUNDARY];
-        while
+        int[][] solveableArray = new int[GRID_BOUNDARY][GRID_BOUNDARY];
 
+        while (solvable == false) {
+            SudokuUtilities, copySudokuArrayValues(solvedGame, SovlabelArray);
 
-        return new int[0][];
+            int index = 0;
+
+            while (index < 40) {
+                int xCoordinate = random.nextInt(GRID_BOUNDARY);
+                int yCoordinate = random.nextInt(GRID_BOUNDARY);
+
+            if (solveableArray[xCoordinate][yCoordinate] != 0) {
+                solveableArray[xCoordinate][yCoordinate] = 0;
+                index++;
+            }
+        }
+
+            int[][] toBeSolved = new int[GRID_BOUNDARY][GRID_BOUNDARY];
+            SudokuUtilities.copySudokuArrayValues(solvableArray, toBeSolved);
+
+            solvable = SudokuSolver.puzzleIsSolvable(toBeSolved);
+    }
+
+        return solveableArray;
+
     }
 
 
